@@ -97,13 +97,23 @@ JSONSchema.new = function( schemasPath)
                 end
                 if propertyProperties.minimum then
                     if propertyInstance < propertyProperties.minimum then
-                        local errorMsg = string.format( "Error: %s - value %f is below minimum %f", propertyName, propertyInstance, propertyProperties.minimum)
+                        local errorMsg = nil
+                        if propertyProperties.type == "integer" then
+                            errorMsg = string.format( "Error: %s - value %d is below minimum %d", propertyName, propertyInstance, propertyProperties.minimum)
+                        else
+                            errorMsg = string.format( "Error: %s - value %f is below minimum %f", propertyName, propertyInstance, propertyProperties.minimum)
+                        end
                         return false, {error=errorMsg, property=propertyName}
                     end
                 end
                 if propertyProperties.maximum then
                     if propertyInstance > propertyProperties.maximum then
-                        local errorMsg = string.format( "Error: %s - value %f is above maximum %f", propertyName, propertyInstance, propertyProperties.maximum)
+                        local errorMsg = nil
+                        if propertyProperties.type == "integer" then
+                            errorMsg = string.format( "Error: %s - value %d is above maximum %d", propertyName, propertyInstance, propertyProperties.maximum)
+                        else
+                            errorMsg = string.format( "Error: %s - value %f is above maximum %f", propertyName, propertyInstance, propertyProperties.maximum)
+                        end
                         return false, {error=errorMsg, property=propertyName}
                     end
                 end
@@ -186,10 +196,8 @@ JSONSchema.new = function( schemasPath)
         for propName,propProperties in pairs( levelProps) do
             if propProperties.type == "array" then
                 object[propName] = {}
-                -- TODO: handle heterogenous items
                 for itemNo = 1,propProperties.maxItems do
                     object[propName][itemNo] = self._fakeItem( propProperties.items)
---                    object[propName][itemNo] = propProperties.items.enum[itemNo]
                 end
             elseif propProperties.type == "object" then
                 object[propName] = self._fakeLevel( levelProps[propName])
