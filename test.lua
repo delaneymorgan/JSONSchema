@@ -1,4 +1,4 @@
-m_js = require("jsonschema")
+local m_js = require("jsonschema")
 
 local js = m_js.new( "./")
 
@@ -11,22 +11,22 @@ local BAD_HONORIFIC_JSON = TEST_DIRECTORY .. "/".. "bad_honorific.json"
 local BAD_LASTNAME_JSON = TEST_DIRECTORY .. "/".. "bad_lastname.json"
 local BAD_HETEROGENEOUS_JSON = TEST_DIRECTORY .. "/".. "bad_heterogeneous.json"
 
-local status, reason = js.validate( SCHEMA, fakeObject)
-assert(status)
-
 local fakeObject = js.fakeObject( SCHEMA)
 assert(fakeObject)
+
+local status, reason = js.validate( SCHEMA, fakeObject)
+assert(status)
 
 local goodJSON = js.load( GOOD_JSON)
 status, reason = js.validate( SCHEMA, goodJSON)
 assert(status)
 
-badJSON = js.load( BAD_HETEROGENEOUS_JSON)
+local badJSON = js.load( BAD_HETEROGENEOUS_JSON)
 status, reason = js.validate( SCHEMA, badJSON)
 print("Expected " .. reason.error)
 assert(not status)
 
-local badJSON = js.load( BAD_AGE_1_JSON)
+badJSON = js.load( BAD_AGE_1_JSON)
 status, reason = js.validate( SCHEMA, badJSON)
 print("Expected " .. reason.error)
 assert(not status)

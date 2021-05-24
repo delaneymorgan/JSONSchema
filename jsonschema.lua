@@ -44,7 +44,7 @@ local JSONSchema = {}
 
 JSONSchema.new = function( schemasPath)
     assert( schemasPath)
-    self = {}
+    local self = {}
     self.schemas = {}
     self.schemasPath = schemasPath
 
@@ -193,16 +193,8 @@ JSONSchema.new = function( schemasPath)
                 end
             elseif propProperties.type == "object" then
                 object[propName] = self._fakeLevel( levelProps[propName])
-            elseif propProperties.test_value then
-                object[propName] = self._fakeItem( propProperties)
-            elseif propProperties.enum then
-                object[propName] = self._fakeItem( propProperties)
-            elseif propProperties.type == "string" then
-                object[propName] = self._fakeItem( propProperties)
-            elseif (propProperties.type == "number") or (propProperties.type == "integer") then
-                object[propName] = self._fakeItem( propProperties)
             else
-                object[propName] = propProperties
+                object[propName] = self._fakeItem( propProperties)
             end
         end
         return object
