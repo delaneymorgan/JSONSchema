@@ -1,0 +1,73 @@
+{
+  "$id": "https://example.com/person.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "properties": {
+    "age": {
+      "description": "Age in years which must be equal to or greater than zero.",
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 150
+    },
+    "firstName": {
+      "test_value": "Fred",
+      "type": "string",
+      "description": "The person's first name."
+    },
+    "heterogeneousList": {
+      "type": "array",
+      "minItems": 0,
+      "maxItems": 5,
+      "items": [
+        {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 5
+        },
+        {
+          "type": "string",
+          "enum": [
+            "capsicum",
+            "chillis",
+            "mushrooms",
+            "olives",
+            "pineapple"
+          ]
+        }
+      ]
+    },
+    "homogeneousList": {
+      "type": "array",
+      "minItems": 0,
+      "maxItems": 5,
+      "items": [
+        {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 5
+        }
+      ]
+    },
+    "honorific": {
+      "enum": [
+        "Dr",
+        "Mr",
+        "Ms",
+        "Mrs",
+        "Miss"
+      ],
+      "description": "The person's title."
+    },
+    "lastName": {
+      "test_value": "Nurk",
+      "type": "string",
+      "description": "The person's last name."
+    }
+  },
+  "required": [
+    "age",
+    "firstName",
+    "lastName"
+  ],
+  "title": "Person",
+  "type": "object"
+}
